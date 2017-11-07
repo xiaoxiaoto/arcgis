@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost/ArcGIS319/3.19/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost/ArcGIS319/3.19/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost/ArcGIS319/3.19/esri/css/esri.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="font/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="esrix/custom/CustomInfoWindow.css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="font/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>地图</title>
+</head>
+
+<body>
+<div id="map-view" class="map-view">
+    <div id="map-toolbar" class="map-toolbar toolbar-top-center">
+        <span title="切换底图" data-name="basemapGallery"><i class="fa fa-th-large"></i></span>
+        <span title="全图" data-name="zoomfull"><i class="fa fa-globe"></i></span>
+        <span title="漫游" data-name="pan"><i class="fa fa-arrows"></i></span>
+        <span title="鹰眼" data-name="overview"><i class="fa fa-eye"></i></span>
+        <span title="放大" data-name="zoomin"><i class="fa fa-search-plus"></i></span>
+        <span title="缩小" data-name="zoomout"><i class="fa fa-search-minus"></i></span>
+        <span title="下一视图" data-name="zoomnext"><i class="fa fa-step-forward"></i></span>
+        <span title="上一视图" data-name="zoomprev"><i class="fa fa-step-backward"></i></span>
+        <span title="坐标查询" data-name="xysearch"><i class="fa fa-crosshairs"></i></span>
+        <span title="工具箱" data-name="toolbox"><i class="fa fa-briefcase"></i></span>
+        <span title="扩展" data-name="extend"><i class="fa fa-shekel"></i></span>
+        <span title="查询" data-name="search"><i class="fa fa-search"></i></span>
+        <span title="图层操作" data-name="layers"><i class="fa fa-leanpub"></i></span>
+    </div>
+    <div id="map-basemapGallery" class="map-basemapGallery basemapGallery-top-right">
+        <div id="basemapGallery"></div>
+    </div>
+    <div id="map-xysearch"  class="map-xysearch" style="display: none">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="X" class="col-sm-2 control-label">X</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="X"placeholder="请输入X坐标">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Y" class="col-sm-2 control-label">Y</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Y" placeholder="请输入Y坐标">
+                </div>
+             </div>
+            <div class="form-group">
+                <div class="col-sm-7" ></div>
+                <button id="search"type="button" class="col-sm-2 btn btn-primary" ><i class="fa fa-search"></i></button>
+                <button id="trash"type="button" class="col-sm-2 btn btn-primary" style="margin-left: 5%" ><i class="fa fa-trash-o"></i></button>
+            </div>
+            </form>
+    </div>
+    <div id="map-toolbox"  class="map-toolbox" style="display: none">
+            <div class="toolbox col-sm-12">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="清除" data-name="clear" ><i class="fa fa-eraser"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="编辑" data-name="edit" ><i class="fa fa-edit"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="保存" data-name="save" ><i class="fa fa-save"></i></span>
+                    </div>
+                </div>
+                <hr class="col-sm-12"/>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="文字" data-name="text" ><i class="fa fa-font"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="点" data-name="point" ><i class="fa fa-circle"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="多点" data-name="multi_point" ><i class="fa fa-ellipsis-h"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="线" data-name="line" ><i class="fa fa-minus"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="折线" data-name="polyline" ><i class="fa fa-share-alt"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="曲线" data-name="freehand_polyline" ><i class="fa fa-vine"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="范围" data-name="extent" ><i class="fa fa-object-group"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="面" data-name="polygon" ><i class="fa fa-object-ungroup"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="曲面" data-name="freehand_polygon" ><i class="fa fa-hand-lizard-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="三角形" data-name="triangle" ><i class="fa fa-play"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="圆" data-name="circle" ><i class="fa fa-circle-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="矩形" data-name="rectangle" ><i class="fa  fa-square-o"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="椭圆" data-name="ellipse" ><i class="fa fa-lemon-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="左箭头" data-name="left_arrow" ><i class="fa fa-arrow-left"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="右箭头" data-name="right_arrow" ><i class="fa fa-arrow-right"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="上箭头" data-name="up_arrow" ><i class="fa fa-arrow-up"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="下箭头" data-name="down_arrow" ><i class="fa fa-arrow-down"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="箭头" data-name="arrow" ><i class="fa fa-arrows"></i></span>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="map-extendbox"  class="map-extendbox" style="display: none">
+            <div class="extendbox col-sm-12">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="百度地图" data-name="baidu" ><i class="fa fa-paw"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="定制窗口" data-name="window" ><i class="fa fa-newspaper-o"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="2.5D" data-name="3D" ><i class="fa fa-cubes"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="D3图" data-name="D3" ><i class="fa fa-group"></i></span>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="map-searchbox"  class="map-searchbox" style="display: none">
+            <div class="searchbox col-sm-12">
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="属性查询" data-name="attribute_search" ><i class="fa fa-newspaper-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="空间查询" data-name="spatial_search" ><i class="fa fa-connectdevelop"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="属性查询" data-name="attribute_query_search" ><i class="fa fa-instagram"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="空间查询" data-name="spatial_query_search" ><i class="fa fa-gg-circle"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="点查询" data-name="point" ><i class="fa fa-dot-circle-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="线查询" data-name="line" ><i class="fa fa-minus-square-o"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="折线查询" data-name="polyline" ><i class="fa fa-share-alt"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="曲线查询" data-name="freehand_polyline" ><i class="fa fa-vine"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="面查询" data-name="polygon" ><i class="fa fa-object-ungroup"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="曲面查询" data-name="freehand_polygon" ><i class="fa fa-hand-lizard-o"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="三角形查询" data-name="triangle" ><i class="fa fa-play"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="圆查询" data-name="circle" ><i class="fa fa-circle-thin"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <span title="矩形查询" data-name="rectangle" ><i class="fa fa-square-o"></i></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span title="椭圆查询" data-name="ellipse" ><i class="fa fa-lemon-o"></i></span>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="map-searchpanel"  class="map-searchpanel" style="display: none">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="州名" class="col-sm-2 control-label">州名</label>
+                <div class="col-sm-10">
+                    <input type="text" id="stateName" class="form-control" placeholder="请输入州名">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-7" ></div>
+                <button id="panel_search"type="button" class="col-sm-2 btn btn-primary" ><i class="fa fa-search"></i></button>
+                <button id="panel_trash"type="button" class="col-sm-2 btn btn-primary" style="margin-left: 5%" ><i class="fa fa-trash-o"></i></button>
+            </div>
+        </form>
+    </div>
+    <div id="map-searchpanel1"  class="map-searchpanel1" style="display: none">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="州名" class="col-sm-2 control-label">州名</label>
+                <div class="col-sm-10">
+                    <input type="text" id="stateName1" class="form-control" placeholder="请输入州名">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-7" ></div>
+                <button id="panel_search1"type="button" class="col-sm-2 btn btn-primary" ><i class="fa fa-search"></i></button>
+                <button id="panel_trash1"type="button" class="col-sm-2 btn btn-primary" style="margin-left: 5%" ><i class="fa fa-trash-o"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var RootPath=location.pathname.replace(/\/[^/]+$/, "");
+    document.write('<script type="text/javascript" src="'+RootPath+'/jquery/jquery-2.2.1.min.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/layer/layer.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/dist/heatmap.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/dist/osmbuildings.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/dist/d3.v3.min.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/esrix/esrix.js" > <\/script>');
+    document.write('<script type="text/javascript" src="http://localhost/ArcGIS319/3.19/init.js" > <\/script>');
+    document.write('<script type="text/javascript" src="'+RootPath+'/js/map-init.js" > <\/script>');
+</script>
+</body>
+</html>
